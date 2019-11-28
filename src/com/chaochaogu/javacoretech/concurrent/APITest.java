@@ -1,11 +1,11 @@
-package com.chaochaogu.test;
+package com.chaochaogu.javacoretech.concurrent;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAccumulator;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -117,6 +117,7 @@ public class APITest {
         // 对所有的修改方法加写锁
         writeLock.lock();
         writeLock.unlock();
+        // 阻塞队列
         Queue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
         Queue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(10, true);
         Queue<String> priorityBlockingQueue = new PriorityBlockingQueue<>();
@@ -128,7 +129,72 @@ public class APITest {
         }
         arrayBlockingQueue.peek();
         priorityBlockingQueue.poll();
+        // 高效映射、集和队列
+        ConcurrentHashMap<String, Long> concurrentHashMap = new ConcurrentHashMap<>();
+        ConcurrentSkipListMap<String, Object> concurrentSkipListMap = new ConcurrentSkipListMap<>();
+        ConcurrentSkipListSet<String> concurrentSkipListSet = new ConcurrentSkipListSet<>();
+        ConcurrentLinkedDeque<String> concurrentLinkedDeque = new ConcurrentLinkedDeque<>();
+        // 映射条目的原子更新
+        Long compute = concurrentHashMap.compute("word", (k, v) -> v == null ? 1 : v + 1);
+        Long merge = concurrentHashMap.merge("word", 1L, Long::sum);
+        ConcurrentHashMap<String, LongAdder> atomicMap = new ConcurrentHashMap<>();
+        atomicMap.get("word").increment();
+        // 对并发散列映射的批操作
+        String search = concurrentHashMap.search(1L, (k, v) -> k.equals("123") ? k : null);
+        concurrentHashMap.forEach(1L, (k, v) -> System.out.println("key" + k + "value" + v));
+        Long reduceValues = concurrentHashMap.reduceValues(1L, Long::sum);
+        // 并发集视图
+        Set<String> keys = ConcurrentHashMap.newKeySet();
+        // 写数组的拷贝
+        new CopyOnWriteArrayList<String>();
+        new CopyOnWriteArraySet<String>();
+        // 并行数组算法
+        Arrays.parallelSort(new String[]{"12", "235", "3"}, Comparator.comparing(String::length));
+        // 同步包装器（synchronization wrapper）
+        List<Object> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        Map<Object, Object> synchronizedMap = Collections.synchronizedMap(new HashMap<>());
+        // Callable与Future
+        Future<Integer> future = new Future<Integer>() {
+            @Override
+            public boolean cancel(boolean mayInterruptIfRunning) {
+                return false;
+            }
 
+            @Override
+            public boolean isCancelled() {
+                return false;
+            }
 
+            @Override
+            public boolean isDone() {
+                return false;
+            }
+
+            @Override
+            public Integer get() throws InterruptedException, ExecutionException {
+                return null;
+            }
+
+            @Override
+            public Integer get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+                return null;
+            }
+        };
+        Callable<Integer> myComputation = () -> 1;
+        FutureTask<Integer> task = new FutureTask<>(myComputation);
+        // it's a Runnable
+        new Thread(task).start();
+        // it's a Future
+        try {
+            Integer res = task.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 线程池
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        Future<Integer> submit = executorService.submit(myComputation);
+        submit.cancel(true);
+        submit.isDone();
+        executorService.shutdown();
     }
 }
