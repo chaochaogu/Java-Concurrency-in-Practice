@@ -191,10 +191,44 @@ public class APITest {
             e.printStackTrace();
         }
         // 线程池
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        Future<Integer> submit = executorService.submit(myComputation);
+        ExecutorService executor = Executors.newCachedThreadPool();
+        Executors.newFixedThreadPool(3);
+        Executors.newSingleThreadExecutor();
+        Executors.newSingleThreadScheduledExecutor();
+        Future<Integer> submit = executor.submit(myComputation);
         submit.cancel(true);
         submit.isDone();
-        executorService.shutdown();
+        executor.shutdownNow();
+        // 预定执行
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
+        scheduledExecutorService.schedule(() -> System.out.println("3"), 3L, TimeUnit.SECONDS);
+        scheduledExecutorService.scheduleWithFixedDelay(() -> System.out.println("1"), 3L, 4L, TimeUnit.SECONDS);
+        scheduledExecutorService.shutdown();
+        // 控制任务组
+        List<Callable<Integer>> tasks = new ArrayList<>();
+        tasks.add(myComputation);
+        try {
+            List<Future<Integer>> results = executor.invokeAll(tasks);
+            for (Future<Integer> result : results) {
+                result.get();
+                // do business
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ExecutorCompletionService<Integer> executorCompletionService = new ExecutorCompletionService<>(executor);
+        for (Callable task1 : tasks){
+            executorCompletionService.submit(task1);
+        }
+        for (int i = 0; i < tasks.size(); i++) {
+            try {
+                executorCompletionService.take().get();
+                // do business
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // Fork-Join框架(RecursiveTask)
+        // 可完成 Future(CompletableFuture)
     }
 }
