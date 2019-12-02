@@ -9,6 +9,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface GuardeBy {
+public @interface GuardedBy {
     String value();
 }

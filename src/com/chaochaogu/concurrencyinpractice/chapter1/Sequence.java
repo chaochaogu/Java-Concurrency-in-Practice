@@ -1,6 +1,6 @@
 package com.chaochaogu.concurrencyinpractice.chapter1;
 
-import com.chaochaogu.concurrencyinpractice.model.GuardeBy;
+import com.chaochaogu.concurrencyinpractice.model.GuardedBy;
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
 /**
@@ -12,7 +12,7 @@ import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 @ThreadSafe
 public class Sequence {
 
-    @GuardeBy("this")
+    @GuardedBy("this")
     private int value;
 
     public synchronized int getNext() {
