@@ -1,5 +1,6 @@
 package com.chaochaogu.concurrencyinpractice.chapter2;
 
+
 import com.chaochaogu.concurrencyinpractice.model.NotThreadSafe;
 
 /**

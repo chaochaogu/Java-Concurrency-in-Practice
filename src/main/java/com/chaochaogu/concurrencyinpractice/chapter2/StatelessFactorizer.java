@@ -1,30 +1,23 @@
 package com.chaochaogu.concurrencyinpractice.chapter2;
 
+
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
 import java.math.BigInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 使用AtomicLong类型的变量来统计已处理请求的数量
+ * 一个无状态的Servlet
  *
  * @author chaochao gu
- * @date 2019/12/4
+ * @date 2019/12/3
  */
 @ThreadSafe
-public class CountingFactorizer implements Servlet {
-
-    private final AtomicLong count = new AtomicLong(0);
-
-    public long getCount() {
-        return count.get();
-    }
+public class StatelessFactorizer implements Servlet {
 
     @Override
     public void service(ServletRequest request, ServletResponse response) {
-        BigInteger i = extractFromRequest(request);
+        BigInteger i = extractFromRequest();
         BigInteger[] factors = factor(i);
-        count.incrementAndGet();
         encodeIntoResponse(response, factors);
     }
 
@@ -35,7 +28,17 @@ public class CountingFactorizer implements Servlet {
         return null;
     }
 
-    private BigInteger extractFromRequest(ServletRequest request) {
+    private BigInteger extractFromRequest() {
         return null;
     }
+}
+
+interface Servlet {
+    void service(ServletRequest request, ServletResponse response);
+}
+
+class ServletRequest {
+}
+
+class ServletResponse {
 }

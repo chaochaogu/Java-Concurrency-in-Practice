@@ -1,5 +1,6 @@
 package com.chaochaogu.concurrencyinpractice.chapter2;
 
+
 import com.chaochaogu.concurrencyinpractice.model.GuardedBy;
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
@@ -15,9 +16,11 @@ import java.util.Objects;
 @ThreadSafe
 public class SynchronizedFactorizer implements Servlet {
 
-    @GuardedBy("this") private BigInteger lastNumber;
+    @GuardedBy("this")
+    private BigInteger lastNumber;
 
-    @GuardedBy("this") private BigInteger[] lastFactors;
+    @GuardedBy("this")
+    private BigInteger[] lastFactors;
 
     @Override
     public synchronized void service(ServletRequest request, ServletResponse response) {

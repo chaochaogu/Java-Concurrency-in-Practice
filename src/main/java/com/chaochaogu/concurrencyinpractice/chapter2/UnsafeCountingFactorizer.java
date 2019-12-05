@@ -1,22 +1,30 @@
 package com.chaochaogu.concurrencyinpractice.chapter2;
 
-import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
+
+import com.chaochaogu.concurrencyinpractice.model.NotThreadSafe;
 
 import java.math.BigInteger;
 
 /**
- * 一个无状态的Servlet
+ * 在没有同步的情况下统计已处理请求数量的Servlet（不要这么做）
  *
  * @author chaochao gu
  * @date 2019/12/3
  */
-@ThreadSafe
-public class StatelessFactorizer implements Servlet {
+@NotThreadSafe
+public class UnsafeCountingFactorizer implements Servlet {
+
+    private long count = 0;
+
+    public long getCount() {
+        return count;
+    }
 
     @Override
     public void service(ServletRequest request, ServletResponse response) {
-        BigInteger i = extractFromRequest();
+        BigInteger i = extractFromRequest(request);
         BigInteger[] factors = factor(i);
+        ++count;
         encodeIntoResponse(response, factors);
     }
 
@@ -27,17 +35,7 @@ public class StatelessFactorizer implements Servlet {
         return null;
     }
 
-    private BigInteger extractFromRequest() {
+    private BigInteger extractFromRequest(ServletRequest request) {
         return null;
     }
-}
-
-interface Servlet {
-    void service(ServletRequest request, ServletResponse response);
-}
-
-class ServletRequest {
-}
-
-class ServletResponse {
 }
