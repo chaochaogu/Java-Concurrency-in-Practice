@@ -6,7 +6,7 @@ package com.chaochaogu.concurrencyinpractice.chapter3;
  * @author chaochao gu
  * @date 2019/12/5
  */
-public class VolatileAbout {
+public class CountingSheep {
 
     volatile boolean asleep;
 
@@ -17,5 +17,6 @@ public class VolatileAbout {
     }
 
     private void countSomeSheep() {
+        // one, two, three...
     }
 }

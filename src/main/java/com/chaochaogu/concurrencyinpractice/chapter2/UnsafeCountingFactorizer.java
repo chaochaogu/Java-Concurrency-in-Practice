@@ -3,6 +3,10 @@ package com.chaochaogu.concurrencyinpractice.chapter2;
 
 import com.chaochaogu.concurrencyinpractice.model.NotThreadSafe;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.math.BigInteger;
 
 /**
@@ -12,7 +16,7 @@ import java.math.BigInteger;
  * @date 2019/12/3
  */
 @NotThreadSafe
-public class UnsafeCountingFactorizer implements Servlet {
+public class UnsafeCountingFactorizer extends GenericServlet implements Servlet {
 
     private long count = 0;
 

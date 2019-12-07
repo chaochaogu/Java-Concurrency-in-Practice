@@ -3,6 +3,10 @@ package com.chaochaogu.concurrencyinpractice.chapter2;
 
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -13,7 +17,7 @@ import java.util.Objects;
  * @date 2019/12/5
  */
 @ThreadSafe
-public class CachedFactorizer implements Servlet {
+public class CachedFactorizer extends GenericServlet implements Servlet {
 
     private BigInteger lastNumber;
 

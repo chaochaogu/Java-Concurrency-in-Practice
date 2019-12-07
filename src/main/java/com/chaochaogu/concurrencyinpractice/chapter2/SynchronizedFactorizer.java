@@ -4,6 +4,10 @@ package com.chaochaogu.concurrencyinpractice.chapter2;
 import com.chaochaogu.concurrencyinpractice.model.GuardedBy;
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -14,7 +18,7 @@ import java.util.Objects;
  * @date 2019/12/4
  */
 @ThreadSafe
-public class SynchronizedFactorizer implements Servlet {
+public class SynchronizedFactorizer extends GenericServlet implements Servlet {
 
     @GuardedBy("this")
     private BigInteger lastNumber;

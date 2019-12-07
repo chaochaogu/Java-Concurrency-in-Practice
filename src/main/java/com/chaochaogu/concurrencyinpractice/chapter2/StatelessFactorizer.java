@@ -3,6 +3,10 @@ package com.chaochaogu.concurrencyinpractice.chapter2;
 
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.math.BigInteger;
 
 /**
@@ -12,7 +16,7 @@ import java.math.BigInteger;
  * @date 2019/12/3
  */
 @ThreadSafe
-public class StatelessFactorizer implements Servlet {
+public class StatelessFactorizer extends GenericServlet implements Servlet {
 
     @Override
     public void service(ServletRequest request, ServletResponse response) {
@@ -31,14 +35,4 @@ public class StatelessFactorizer implements Servlet {
     private BigInteger extractFromRequest() {
         return null;
     }
-}
-
-interface Servlet {
-    void service(ServletRequest request, ServletResponse response);
-}
-
-class ServletRequest {
-}
-
-class ServletResponse {
 }

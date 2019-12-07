@@ -3,6 +3,10 @@ package com.chaochaogu.concurrencyinpractice.chapter2;
 
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
 
+import javax.servlet.GenericServlet;
+import javax.servlet.Servlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.math.BigInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -13,7 +17,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @date 2019/12/4
  */
 @ThreadSafe
-public class CountingFactorizer implements Servlet {
+public class CountingFactorizer extends GenericServlet implements Servlet {
 
     private final AtomicLong count = new AtomicLong(0);
 
