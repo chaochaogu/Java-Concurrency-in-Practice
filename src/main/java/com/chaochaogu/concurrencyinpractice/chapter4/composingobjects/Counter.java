@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter4.composing.objects;
+package com.chaochaogu.concurrencyinpractice.chapter4.composingobjects;
 
 import com.chaochaogu.concurrencyinpractice.model.GuardedBy;
 import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;

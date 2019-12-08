@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter3.sharing.objects;
+package com.chaochaogu.concurrencyinpractice.chapter3.sharingobjects;
 
 /**
  * 由于未被正确发布，因此这个类可能出现故障

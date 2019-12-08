@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter2.thread.safety;
+package com.chaochaogu.concurrencyinpractice.chapter2.threadsafety;
 
 /**
  * 如果内置锁不是可重入的，那么下面这段代码将发生死锁
