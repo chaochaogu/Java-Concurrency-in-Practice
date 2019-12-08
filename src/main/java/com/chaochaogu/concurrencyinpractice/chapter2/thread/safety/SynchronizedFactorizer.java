@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter2;
+package com.chaochaogu.concurrencyinpractice.chapter2.thread.safety;
 
 
 import com.chaochaogu.concurrencyinpractice.model.GuardedBy;

@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter1;
+package com.chaochaogu.concurrencyinpractice.chapter1.introduction;
 
 
 import com.chaochaogu.concurrencyinpractice.model.NotThreadSafe;

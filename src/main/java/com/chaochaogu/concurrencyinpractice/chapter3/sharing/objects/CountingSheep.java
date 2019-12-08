@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter3;
+package com.chaochaogu.concurrencyinpractice.chapter3.sharing.objects;
 
 /**
  * 数绵羊

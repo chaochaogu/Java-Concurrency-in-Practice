@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter3;
+package com.chaochaogu.concurrencyinpractice.chapter3.sharing.objects;
 
 /**
  * 使内部的可变状态逸出（不要这么做）

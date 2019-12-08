@@ -1,4 +1,4 @@
-package com.chaochaogu.concurrencyinpractice.chapter3;
+package com.chaochaogu.concurrencyinpractice.chapter3.sharing.objects;
 
 /**
  * 隐式地使this引用逸出（不要这么做）
