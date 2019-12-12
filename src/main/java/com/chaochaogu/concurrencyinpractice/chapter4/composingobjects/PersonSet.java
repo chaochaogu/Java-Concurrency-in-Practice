@@ -6,6 +6,8 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 
 /**
+ * 通过封闭机制来确保线程安全
+ *
  * @author chaochao Gu
  * @date 2019/12/12
  */
