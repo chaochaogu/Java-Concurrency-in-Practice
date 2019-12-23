@@ -27,12 +27,13 @@ public class PreLoader {
             if (cause instanceof DataLoadException) {
                 throw (DataLoadException) cause;
             } else {
-                throw LaunderThrowable.launderThrowable(cause);
+                throw launderThrowable(cause);
             }
         }
     }
 
     private ProductInfo loadProductInfo() throws DataLoadException {
+        // load productInfo...
         return null;
     }
 
@@ -40,6 +41,22 @@ public class PreLoader {
     }
 
     private class DataLoadException extends RuntimeException {
+    }
+
+    /**
+     * 强制将未检查的Throwable转换为RuntimeException
+     *
+     * @param t
+     * @return RunTimeException
+     */
+    private static RuntimeException launderThrowable(Throwable t) {
+        if (t instanceof RuntimeException) {
+            return (RuntimeException) t;
+        } else if (t instanceof Error) {
+            throw (Error) t;
+        } else {
+            throw new IllegalStateException("not unchecked" + t);
+        }
     }
 
 }
