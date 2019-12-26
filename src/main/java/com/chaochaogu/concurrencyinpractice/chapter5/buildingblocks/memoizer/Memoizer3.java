@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 
+import static com.chaochaogu.concurrencyinpractice.model.Throwables.launderThrowable;
+
 /**
  * 基于FutureTask的Memoizing封装器
  *
@@ -36,22 +38,6 @@ public class Memoizer3<A, V> implements Computable<A, V> {
             return f.get();
         } catch (ExecutionException e) {
             throw launderThrowable(e.getCause());
-        }
-    }
-
-    /**
-     * 强制将未检查的Throwable转换为RuntimeException
-     *
-     * @param t
-     * @return
-     */
-    private RuntimeException launderThrowable(Throwable t) {
-        if (t instanceof Exception) {
-            return (RuntimeException) t;
-        } else if (t instanceof Error) {
-            throw (Error) t;
-        } else {
-            throw new IllegalStateException("not unchecked " + t);
         }
     }
 }

@@ -3,6 +3,8 @@ package com.chaochaogu.concurrencyinpractice.chapter5.buildingblocks;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import static com.chaochaogu.concurrencyinpractice.model.Throwables.launderThrowable;
+
 /**
  * 使用FutureTask来提前加载稍后需要的数据
  *
@@ -42,21 +44,4 @@ public class PreLoader {
 
     private class DataLoadException extends RuntimeException {
     }
-
-    /**
-     * 强制将未检查的Throwable转换为RuntimeException
-     *
-     * @param t
-     * @return RunTimeException
-     */
-    private static RuntimeException launderThrowable(Throwable t) {
-        if (t instanceof RuntimeException) {
-            return (RuntimeException) t;
-        } else if (t instanceof Error) {
-            throw (Error) t;
-        } else {
-            throw new IllegalStateException("not unchecked" + t);
-        }
-    }
-
 }

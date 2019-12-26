@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
 
+import static com.chaochaogu.concurrencyinpractice.model.Throwables.launderThrowable;
+
 /**
  * Memoizer的最终实现
  *
@@ -39,22 +41,6 @@ public class Memoizer<A, V> implements Computable<A, V> {
             } catch (ExecutionException e) {
                 throw launderThrowable(e.getCause());
             }
-        }
-    }
-
-    /**
-     * 强制将未检查的Throwable转换为RuntimeException
-     *
-     * @param t
-     * @return
-     */
-    private RuntimeException launderThrowable(Throwable t) {
-        if (t instanceof RuntimeException) {
-            return (RuntimeException) t;
-        } else if (t instanceof Error) {
-            throw (Error) t;
-        } else {
-            throw new IllegalStateException("not unchecked " + t);
         }
     }
 }
