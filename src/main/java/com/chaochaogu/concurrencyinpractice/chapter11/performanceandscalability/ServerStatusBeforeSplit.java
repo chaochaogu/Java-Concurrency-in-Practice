@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 对锁进行分解
+ * 未对锁进行分解
  *
  * @author chaochao Gu
  * @date 2020/1/16
