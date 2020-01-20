@@ -3,7 +3,7 @@ package com.chaochaogu.concurrencyinpractice.chapter12.testingconcurrentprograms
 import junit.framework.TestCase;
 
 /**
- * BoundedBuffer的基本单元测试、测试阻塞行为以及对中断的响应性
+ * BoundedBuffer的基本单元测试、测试阻塞行为以及对中断的响应性、测试资源泄露
  *
  * @author chaochao Gu
  * @date 2020/1/19
