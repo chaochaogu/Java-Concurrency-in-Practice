@@ -37,14 +37,17 @@ public class TestThreadPool extends TestCase {
         assertEquals(threadFactory.numCreated.get(), MAX_SIZE);
         exec.shutdownNow();
     }
-}
 
-class TestingThreadFactory implements ThreadFactory {
-    public final AtomicInteger numCreated = new AtomicInteger();
-    private final ThreadFactory factory = Executors.defaultThreadFactory();
+    class TestingThreadFactory implements ThreadFactory {
+        public final AtomicInteger numCreated = new AtomicInteger();
+        private final ThreadFactory factory = Executors.defaultThreadFactory();
 
-    public Thread newThread(Runnable r) {
-        numCreated.incrementAndGet();
-        return factory.newThread(r);
+        public Thread newThread(Runnable r) {
+            numCreated.incrementAndGet();
+            return factory.newThread(r);
+        }
     }
 }
+
+
+
