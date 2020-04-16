@@ -1,11 +1,14 @@
 package com.chaochaogu.concurrencyinpractice.chapter14.buildingcustomsynchronizers;
 
+import com.chaochaogu.concurrencyinpractice.model.ThreadSafe;
+
 /**
  * 使用简单阻塞实现的有界缓存
  *
  * @author chaochao Gu
  * @date 2020/4/14
  */
+@ThreadSafe
 public class SleepyBoundedBuffer<V> extends BaseBoundedBuffer<V> {
     int SLEEP_GRANULARITY = 60;
 
