@@ -1,5 +1,9 @@
 package com.chaochaogu.javacoretech.concurrent;
 
+import com.google.common.util.concurrent.Runnables;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
@@ -11,16 +15,21 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import static java.util.concurrent.TimeUnit.MINUTES;
+
 /**
+ * 并发code api样例
+ *
  * @author chaochao Gu
  * @date 2019/11/25
  */
-public class APITest {
+@Slf4j
+public class ConcurrencyApi {
 
     public static final ThreadLocal<SimpleDateFormat> DATE_FORMAT =
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         DATE_FORMAT.get().format(new Date());
         int random = ThreadLocalRandom.current().nextInt(3);
         Thread t1 = new Thread(() -> {
@@ -217,7 +226,7 @@ public class APITest {
             e.printStackTrace();
         }
         ExecutorCompletionService<Integer> executorCompletionService = new ExecutorCompletionService<>(executor);
-        for (Callable task1 : tasks){
+        for (Callable task1 : tasks) {
             executorCompletionService.submit(task1);
         }
         for (int i = 0; i < tasks.size(); i++) {
@@ -228,7 +237,29 @@ public class APITest {
                 e.printStackTrace();
             }
         }
-        // Fork-Join框架(RecursiveTask)
+        // Fork-Join框架(RecursiveTask)，具体代码见daily项目{@link com.chaochaogu.daily.fork.join.Client}
         // 可完成 Future(CompletableFuture)
+        ExecutorService fixTmallFeeService = new ThreadPoolExecutor(16, 20, 60L, MINUTES,
+                new LinkedBlockingQueue<>(500000),
+                new ThreadFactoryBuilder().setNameFormat("tmall-presale-fee-executor-%d").build(),
+                (r, exec) -> log.error("fixTmallFee task {} is rejected", r));
+        CompletableFuture.runAsync(Runnables.doNothing(), fixTmallFeeService);
+
+        CompletableFuture<Void> future1 = CompletableFuture.supplyAsync(() -> new Random().nextInt(10)).thenAccept(System.out::println);
+        future1.get();
+
+        CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> {
+            int i = 10 / 0;
+            return new Random().nextInt(10);
+        }).handle((param, throwable) -> {
+            int result = -1;
+            if (throwable == null) {
+                result = param * 2;
+            } else {
+                System.out.println(throwable.getMessage());
+            }
+            return result;
+        });
+        System.out.println(future2.get());
     }
 }
