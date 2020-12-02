@@ -201,7 +201,9 @@ public class ConcurrencyApi {
         }
         // 线程池
         ExecutorService executor = Executors.newCachedThreadPool();
-        Executors.newFixedThreadPool(3);
+        // 对于资源密集型任务，一般线程数为cpu数 * 2
+        // 对于计算密集型任务，一般线程数为cpu数 + 1
+        Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 2);
         Executors.newSingleThreadExecutor();
         Executors.newSingleThreadScheduledExecutor();
         Future<Integer> submit = executor.submit(myComputation);
