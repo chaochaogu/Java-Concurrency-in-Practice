@@ -3,6 +3,7 @@ package com.chaochaogu.javacoretech.concurrent;
 import com.google.common.util.concurrent.Runnables;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
+import sun.misc.Unsafe;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -10,10 +11,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAccumulator;
 import java.util.concurrent.atomic.LongAdder;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.*;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 
@@ -126,6 +124,17 @@ public class ConcurrencyApi {
         // 对所有的修改方法加写锁
         writeLock.lock();
         writeLock.unlock();
+
+        // 很多类库都是基于Unsafe类开发的，Unsafe类使Java拥有了像C语言的指针一样操作内存空间的能力，同时也带来了指针的问题
+        // Unsafe类提供了以下这些功能：内存管理；非常规的对象实例化；操作类、对象、变量；数组操作；多线程同步；挂起与恢复；内存屏障
+        Unsafe unsafe = Unsafe.getUnsafe();
+        unsafe.park(false, 0L);
+
+        // LockSupport是一个线程阻塞工具类，所有的方法都是静态方法，可以让线程在任意位置阻塞、唤醒
+        // park不需要获取对象锁，中断的时候park不会抛出InterruptedException
+        LockSupport.park();
+        LockSupport.unpark(Thread.currentThread());
+
         // 阻塞队列
         Queue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
         Queue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(10, true);
