@@ -135,6 +135,11 @@ public class ConcurrencyApi {
         LockSupport.park();
         LockSupport.unpark(Thread.currentThread());
 
+        // AQS这个类是许多同步类的基类
+        // AQS是一个用来构建锁和同步器的框架，包括ReentrantLock、Semaphore、CountdownLatch等
+        // AQS解决了在实现同步器时涉及的大量细节问题，例如等待线程采用FIFO队列操作顺序
+        Class<AbstractQueuedSynchronizer> synchronizerClass = AbstractQueuedSynchronizer.class;
+
         // 阻塞队列
         Queue<String> linkedBlockingQueue = new LinkedBlockingQueue<>();
         Queue<String> arrayBlockingQueue = new ArrayBlockingQueue<>(10, true);
